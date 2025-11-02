@@ -19,7 +19,21 @@
 
 namespace sjtu {
 class int2048 {
-  // todo
+private:
+  static const unsigned int BASE = 1000000000u; // 1e9
+  static const int BASE_DIG = 9;
+  std::vector<unsigned int> d; // little-endian limbs in BASE
+  bool neg = false;        // true if number < 0 and not zero
+
+  // helpers (declared here, defined in cpp)
+  void normalize();
+  static int cmp_abs(const int2048 &x, const int2048 &y);
+  static void add_abs_to(std::vector<unsigned int> &a, const std::vector<unsigned int> &b);
+  static void sub_abs_to(std::vector<unsigned int> &a, const std::vector<unsigned int> &b);
+  static std::vector<unsigned int> mul_naive(const std::vector<unsigned int> &a, const std::vector<unsigned int> &b);
+  static std::vector<unsigned int> mul_fft(const std::vector<unsigned int> &a, const std::vector<unsigned int> &b);
+  static void divmod_abs(const int2048 &a, const int2048 &b, int2048 &q, int2048 &r);
+
 public:
   // Constructors
   int2048();
